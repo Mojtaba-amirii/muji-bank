@@ -5,10 +5,12 @@ import Register from "./components/register";
 
 export default function Home() {
   return (
-    <main className=" flex flex-col bg-slate-400 w-full min-h-screen">
+    <main className=" flex flex-col bg-neutral-100 w-full min-h-screen">
       <Header />
-      <Register />
-      <Login />
+      <section className="flex flex-col items-center p-8 flex-grow">
+        <Register />
+        <Login />
+      </section>
       <Footer />
     </main>
   );

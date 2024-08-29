@@ -3,7 +3,6 @@ import { sql } from "@vercel/postgres";
 
 export async function POST(req: Request) {
   const { username, password, amount } = await req.json();
-
   try {
     const { rows } = await sql`
       INSERT INTO users (username, password)
