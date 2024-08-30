@@ -1,69 +1,82 @@
 "use client";
 
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { getAccount } from "../utils/apiService";
 import { User } from "../types/types";
 
 function Login() {
-  const [formState, setFormState] = useState<
+  const [loginCredentials, setLoginCredentials] = useState<
     Pick<User, "username" | "password">
   >({
     username: "",
     password: "",
   });
-  const [amount, setAmount] = useState<number | null>(null);
+  const [accountBalance, setAccountBalance] = useState<number | null>(null);
   const [loginLoading, setLoginLoading] = useState<boolean>(false);
   const [checkingLoading, setCheckingLoading] = useState<boolean>(false);
-
-  const [error, setError] = useState<string | null>(null);
+  const [loginError, setLoginError] = useState<string | null>(null);
   const { isLoggedIn, login, token, logout } = useAuth();
 
   const handleInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const { id, value } = e.target;
-      setFormState((prev) => ({
+      setLoginCredentials((prev) => ({
         ...prev,
         [id]: value,
       }));
-      if (error) setError(null);
+      if (loginError) setLoginError(null);
     },
-    [error]
+    [loginError]
   );
 
-  const handleLogin = useCallback(async () => {
-    setLoginLoading(true);
-    setError(null);
-    try {
-      await login(formState);
-    } catch (error) {
-      console.error("Error during login", error);
-      setError("Login failed. Please try again.");
-    } finally {
-      setLoginLoading(false);
-    }
-  }, [formState, login]);
+  const handleLogin = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setLoginLoading(true);
+      setLoginError(null);
+      try {
+        await login(loginCredentials);
+      } catch (error) {
+        console.error("Error during login", error);
+        setLoginError("Login failed. Please try again.");
+      } finally {
+        setLoginLoading(false);
+      }
+    },
+    [loginCredentials, login]
+  );
 
   const handleGetAccount = useCallback(async () => {
     if (!token) {
-      setError("You must be logged in to check account information.");
+      setLoginError("You must be logged in to check account information.");
       return;
     }
     setCheckingLoading(true);
-    setError(null);
+    setLoginError(null);
     try {
       const accountData = await getAccount(token as string);
-      setAmount(accountData.amount);
+      setAccountBalance(accountData.amount);
     } catch (error) {
       console.error("Error during get account", error);
-      setError("Failed to retrieve account information.");
+      setLoginError("Failed to retrieve account information.");
     } finally {
       setCheckingLoading(false);
     }
   }, [token]);
 
+  const handleLogout = useCallback(() => {
+    logout();
+    setLoginCredentials({ username: "", password: "" });
+    setAccountBalance(null);
+  }, [logout]);
+
   return (
-    <form className="w-full max-w-2xl flex flex-col gap-3 shadow-md p-6 rounded-md mb-8">
+    <form
+      onSubmit={handleLogin}
+      aria-label="Login from"
+      className="w-full max-w-2xl flex flex-col gap-3 shadow-md p-6 rounded-md mb-8"
+    >
       <h2 className="text-2xl text-center font-semibold mb-2">
         Login into your Bank account
       </h2>
@@ -75,11 +88,12 @@ function Login() {
       </label>
       <input
         id="username"
+        name="username"
         title="Log in"
         type="text"
         placeholder="Your username"
         autoComplete="username"
-        value={formState.username}
+        value={loginCredentials.username}
         onChange={handleInputChange}
         required
         className="block w-full p-2 border border-neutral-300 rounded-md shadow-sm"
@@ -92,19 +106,19 @@ function Login() {
       </label>
       <input
         id="password"
+        name="password"
         title="login password"
         type="password"
         placeholder="Your password"
         autoComplete="off"
-        value={formState.password}
+        value={loginCredentials.password}
         onChange={handleInputChange}
         required
         className="block w-full p-2 border border-neutral-300 rounded-md shadow-sm"
       />
       <button
         title="login button"
-        type="button"
-        onClick={handleLogin}
+        type="submit"
         disabled={loginLoading}
         className="w-1/2 mx-auto text-white bg-blue-400 p-2 mt-2 rounded-md shadow-sm hover:bg-blue-500"
       >
@@ -112,19 +126,21 @@ function Login() {
       </button>
       {isLoggedIn && (
         <>
-          <span className=" text-green-600">{`Welcome ${formState.username}!`}</span>
+          <span className=" text-green-600">{`Welcome ${loginCredentials.username}!`}</span>
           <button
             title="logout button"
             type="button"
-            onClick={logout}
+            onClick={handleLogout}
             className="w-1/2 mx-auto bg-red-400 text-white p-2 mt-2 rounded-md shadow-sm hover:bg-red-500"
           >
             Log Out
           </button>
-          <section className="flex flex-col gap-y-2 mt-4">
-            <h2>Your Credit</h2>
+          <div className="flex flex-col gap-y-2 mt-4">
+            <h3 className=" text-lg font-semibold text-center">
+              Your Account Balance
+            </h3>
             <button
-              title="Credit check button"
+              title="Check Balance button"
               type="button"
               onClick={handleGetAccount}
               disabled={checkingLoading}
@@ -132,11 +148,13 @@ function Login() {
             >
               {checkingLoading ? "Checking..." : "Check"}
             </button>
-            <span className="text-green-600">{amount !== null && amount}</span>
-          </section>
+            <p className="text-green-600 ">{`Your balance: ${
+              accountBalance === null ? "Click to check" : accountBalance
+            }`}</p>
+          </div>
         </>
       )}
-      {error && <span className="text-red-500">{error}</span>}
+      {loginError && <span className="text-red-500">{loginError}</span>}
     </form>
   );
 }
