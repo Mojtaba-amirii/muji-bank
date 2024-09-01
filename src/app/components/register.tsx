@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useCallback } from "react";
 import { registerUser } from "../utils/apiService";
 import { User } from "../types/types";
 
@@ -11,25 +11,34 @@ export default function Register() {
   const [registrationStatus, setRegistrationStatus] = useState<
     "success" | "error" | ""
   >("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const user: User = {
-        username,
-        password,
-        amount: amount ? Number(amount) : undefined,
-      };
-      await registerUser(user);
-      setRegistrationStatus("success");
-      setAmount("");
-      setPassword("");
-      setUsername("");
-    } catch (err) {
-      console.error("Error during registration", err);
-      setRegistrationStatus("error");
-    }
-  };
+  const handleRegister = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setIsLoading(true);
+      setRegistrationStatus("");
+      try {
+        const user: User = {
+          username,
+          password,
+          amount: amount ? Number(amount) : undefined,
+        };
+        await registerUser(user);
+        setRegistrationStatus("success");
+        setUsername("");
+        setPassword("");
+        setAmount("");
+      } catch (err) {
+        console.error("Error during registration:", err);
+        setRegistrationStatus("error");
+      } finally {
+        setIsLoading(false);
+        setTimeout(() => setRegistrationStatus(""), 3000);
+      }
+    },
+    [username, password, amount]
+  );
 
   return (
     <form
@@ -56,6 +65,7 @@ export default function Register() {
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         required
+        aria-required="true"
         className="block w-full p-2 border border-neutral-300 rounded-md shadow-sm"
       />
       <label
@@ -74,6 +84,7 @@ export default function Register() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
+        aria-required="true"
         className="block w-full p-2 border border-neutral-300 rounded-md shadow-sm"
       />
       <label
@@ -93,20 +104,26 @@ export default function Register() {
         onChange={(e) => setAmount(e.target.value)}
         className="block w-full p-2 border border-neutral-300 rounded-md shadow-sm"
         required
+        aria-required="true"
+        min="0"
+        step="0.01"
       />
       <button
         title="Register account button"
         type="submit"
+        disabled={isLoading}
         className="w-1/2 mx-auto text-white bg-blue-400 p-2 mt-2 rounded-md shadow-sm hover:bg-blue-500"
       >
-        Register
+        {isLoading ? "Registering..." : "Register"}
       </button>
-      {registrationStatus === "success" && (
-        <p className="text-green-600">Registration successful!</p>
-      )}
-      {registrationStatus === "error" && (
-        <p className="text-red-500">Registration failed. Please try again.</p>
-      )}
+      <div aria-live="polite">
+        {registrationStatus === "success" && (
+          <p className="text-green-600">Registration successful!</p>
+        )}
+        {registrationStatus === "error" && (
+          <p className="text-red-500">Registration failed. Please try again.</p>
+        )}
+      </div>
     </form>
   );
 }

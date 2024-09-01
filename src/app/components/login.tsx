@@ -96,6 +96,7 @@ function Login() {
         value={loginCredentials.username}
         onChange={handleInputChange}
         required
+        aria-required="true"
         className="block w-full p-2 border border-neutral-300 rounded-md shadow-sm"
       />
       <label
@@ -114,28 +115,21 @@ function Login() {
         value={loginCredentials.password}
         onChange={handleInputChange}
         required
+        aria-required="true"
         className="block w-full p-2 border border-neutral-300 rounded-md shadow-sm"
       />
       <button
         title="login button"
         type="submit"
         disabled={loginLoading}
-        className="w-1/2 mx-auto text-white bg-blue-400 p-2 mt-2 rounded-md shadow-sm hover:bg-blue-500"
+        className="w-1/2 mx-auto text-white bg-blue-400 p-2 mt-4 rounded-md shadow-sm hover:bg-blue-500"
       >
         {loginLoading ? "Logging In..." : "Log In"}
       </button>
       {isLoggedIn && (
         <>
-          <span className=" text-green-600">{`Welcome ${loginCredentials.username}!`}</span>
-          <button
-            title="logout button"
-            type="button"
-            onClick={handleLogout}
-            className="w-1/2 mx-auto bg-red-400 text-white p-2 mt-2 rounded-md shadow-sm hover:bg-red-500"
-          >
-            Log Out
-          </button>
-          <div className="flex flex-col gap-y-2 mt-4">
+          <div className="flex flex-col gap-y-6 mt-4">
+            <span className=" text-green-600">{`Welcome ${loginCredentials.username}!`}</span>
             <h3 className=" text-lg font-semibold text-center">
               Your Account Balance
             </h3>
@@ -144,17 +138,29 @@ function Login() {
               type="button"
               onClick={handleGetAccount}
               disabled={checkingLoading}
-              className="w-1/2 mx-auto bg-blue-400 text-white p-2 rounded-md shadow-sm hover:bg-blue-500 "
+              className="w-1/2 mx-auto bg-blue-400 text-white p-2 rounded-md shadow-sm hover:bg-blue-500"
             >
               {checkingLoading ? "Checking..." : "Check"}
             </button>
             <p className="text-green-600 ">{`Your balance: ${
-              accountBalance === null ? "Click to check" : accountBalance
+              accountBalance === null
+                ? "Click to check your balance"
+                : accountBalance
             }`}</p>
+            <button
+              title="logout button"
+              type="button"
+              onClick={handleLogout}
+              className="w-1/2 mx-auto bg-red-400 text-white p-2  rounded-md shadow-sm hover:bg-red-500"
+            >
+              Log Out
+            </button>
           </div>
         </>
       )}
-      {loginError && <span className="text-red-500">{loginError}</span>}
+      <div aria-live="polite">
+        {loginError && <span className="text-red-500">{loginError}</span>}
+      </div>
     </form>
   );
 }

@@ -17,6 +17,12 @@ export async function GET(req: Request) {
     const { rows } = await sql`
       SELECT * FROM accounts WHERE user_id = ${decoded.userId};
     `;
+    if (rows.length === 0) {
+      return NextResponse.json(
+        { message: "Account not found" },
+        { status: 404 }
+      );
+    }
     return NextResponse.json(rows[0]);
   } catch (err) {
     console.error(err);
