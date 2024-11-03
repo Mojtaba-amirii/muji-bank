@@ -19,7 +19,6 @@ export async function POST(req: Request) {
   try {
     await sql`BEGIN`;
 
-    // Check if username already exists
     const { rows: existingUsers } = await sql`
       SELECT id FROM users WHERE username = ${username};
     `;
@@ -43,13 +42,11 @@ export async function POST(req: Request) {
       VALUES (${userId}, ${amount});
     `;
     await sql`COMMIT`;
+
     return NextResponse.json({ message: "User registered successfully" });
   } catch (err) {
     await sql`ROLLBACK`;
     console.error(err);
-    if (err instanceof Error) {
-      return NextResponse.json({ error: err.message }, { status: 500 });
-    }
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }

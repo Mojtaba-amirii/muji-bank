@@ -20,11 +20,12 @@ export async function POST(req: Request) {
       SELECT * FROM users WHERE username = ${username};
     `;
     const dbUser = rows[0];
-    console.log("db user", dbUser);
+
     if (dbUser && (await bcrypt.compare(password, dbUser.password))) {
       const token = jwt.sign({ userId: dbUser.id }, secret, {
         expiresIn: "1h",
       });
+
       return NextResponse.json({ token });
     } else {
       return NextResponse.json(

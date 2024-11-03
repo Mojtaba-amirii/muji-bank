@@ -3,8 +3,7 @@
 import { FormEvent, useState, useCallback } from "react";
 import { registerUser } from "../utils/apiService";
 import { User } from "../types/types";
-import { Eye, EyeOff, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Register() {
   const [username, setUsername] = useState<string>("");

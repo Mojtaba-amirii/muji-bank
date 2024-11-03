@@ -15,14 +15,16 @@ export async function GET(req: Request) {
   try {
     const decoded = jwt.verify(token, secret) as { userId: number };
     const { rows } = await sql`
-      SELECT * FROM accounts WHERE user_id = ${decoded.userId};
+     SELECT accounts.*, users.username FROM accounts JOIN users ON accounts.user_id = users.id WHERE accounts.user_id = ${decoded.userId}
     `;
+
     if (rows.length === 0) {
       return NextResponse.json(
         { message: "Account not found" },
         { status: 404 }
       );
     }
+
     return NextResponse.json(rows[0]);
   } catch (err) {
     console.error(err);
