@@ -26,6 +26,9 @@ export async function GET(req: Request) {
     return NextResponse.json(rows[0]);
   } catch (err) {
     console.error(err);
+    if (err instanceof jwt.JsonWebTokenError) {
+      return NextResponse.json({ message: "Invalid token" }, { status: 401 });
+    }
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
