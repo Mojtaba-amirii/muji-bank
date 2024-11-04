@@ -81,38 +81,34 @@ export default function Header() {
       {isMenuOpen && (
         <div className="md:hidden">
           <nav className="flex flex-col space-y-2 px-4 py-2">
-            <Link href="/" className="text-gray-600 hover:text-blue-600">
+            <Link href="/" className="text-purple-950 hover:text-white">
               Home
             </Link>
             <Link
-              href="/accounts"
-              className="text-gray-600 hover:text-blue-600"
+              href="/create-account"
+              className="text-purple-950 hover:text-white"
             >
-              Accounts
+              Create Account
             </Link>
-            <Link
-              href="/transfers"
-              className="text-gray-600 hover:text-blue-600"
-            >
-              Transfers
-            </Link>
+
             {user ? (
               <>
                 <Link
                   href="/profile"
-                  className="text-gray-600 hover:text-blue-600"
+                  className="text-purple-950 hover:text-white"
                 >
                   Profile
                 </Link>
                 <button
+                  type="button"
                   onClick={logout}
-                  className="text-gray-600 hover:text-blue-600"
+                  className="text-purple-950 hover:text-white"
                 >
                   Logout
                 </button>
               </>
             ) : (
-              <Link href="/login" className="text-gray-600 hover:text-blue-600">
+              <Link href="/login" className=" text-purple-950 hover:text-white">
                 Login
               </Link>
             )}

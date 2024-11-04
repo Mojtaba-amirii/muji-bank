@@ -43,7 +43,7 @@ export default function Register() {
   );
 
   return (
-    <div className=" h-fit bg-gradient-to-b from-purple-700 to-purple-900 flex items-center justify-center p-4 sm:p-6 lg:p-10 rounded-md">
+    <section className=" h-fit bg-gradient-to-b from-purple-700 to-purple-900 flex items-center justify-center p-4 sm:p-6 lg:p-10 rounded-md">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="text-center text-3xl font-extrabold text-white">
@@ -184,6 +184,6 @@ export default function Register() {
           )}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
