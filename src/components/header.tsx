@@ -13,11 +13,11 @@ export default function Header() {
     <header className="shadow-md">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
-          <Link href="/" className="text-2xl font-bold text-purple-950">
+          <Link href="/" className="text-2xl font-bold text-purple-950 p-1">
             Muji Bank
           </Link>
-          <nav className="hidden md:flex space-x-4">
-            <Link href="/" className="text-purple-950 hover:text-white">
+          <nav className="hidden md:flex space-x-6">
+            <Link href="/" className="text-purple-950 hover:text-white p-1">
               Home
             </Link>
 
@@ -25,14 +25,14 @@ export default function Header() {
               <>
                 <Link
                   href="/profile"
-                  className="text-purple-950 hover:text-white"
+                  className="text-purple-950 hover:text-white p-1"
                 >
                   Profile
                 </Link>
                 <button
                   type="button"
                   onClick={logout}
-                  className=" flex justify-center items-center text-purple-950 hover:text-white"
+                  className=" flex justify-center items-center text-purple-950 hover:text-white p-1"
                 >
                   Logout
                   <LogOut className="ml-1 h-5 w-5" />
@@ -42,13 +42,13 @@ export default function Header() {
               <>
                 <Link
                   href="/create-account"
-                  className="text-purple-950 hover:text-white"
+                  className="text-purple-950 hover:text-white p-1"
                 >
                   Create Account
                 </Link>
                 <Link
                   href="/login"
-                  className="text-purple-950 hover:text-white"
+                  className="text-purple-950 hover:text-white p-1"
                 >
                   Login
                 </Link>

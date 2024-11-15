@@ -14,15 +14,17 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Link
             href="/create-account"
-            className="bg-white text-purple-700 hover:bg-purple-100 transition-colors duration-300 font-semibold py-3 px-6 rounded-full inline-flex items-center"
+            className="group bg-white text-purple-700 hover:bg-purple-100 transition-colors duration-300 font-semibold py-3 px-6 rounded-full inline-flex items-center"
           >
-            Create Account <ArrowRight className="ml-2" />
+            Create Account{" "}
+            <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform" />
           </Link>
           <Link
             href="/login"
-            className="bg-purple-700 text-white hover:bg-purple-600 transition-colors duration-300 font-semibold py-3 px-6 rounded-full inline-flex items-center"
+            className="group bg-purple-700 text-white hover:bg-purple-600 transition-colors duration-300 font-semibold py-3 px-6 rounded-full inline-flex items-center"
           >
-            Login <ArrowRight className="ml-2" />
+            Login{" "}
+            <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform" />
           </Link>
         </div>
       </section>
@@ -62,9 +64,10 @@ export default function Home() {
         </p>
         <Link
           href="/create-account"
-          className="bg-yellow-400 text-purple-900 hover:bg-yellow-300 transition-colors duration-300 font-semibold py-3 px-8 rounded-full inline-flex items-center"
+          className="group bg-yellow-400 text-purple-900 hover:bg-yellow-300 transition-colors duration-300 font-semibold py-3 px-8 rounded-full inline-flex items-center"
         >
-          Open Your Account Today <ArrowRight className="ml-2" />
+          Open Your Account Today{" "}
+          <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform" />
         </Link>
       </section>
     </section>
