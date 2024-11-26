@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} flex flex-col w-full min-h-screen bg-gradient-to-b from-purple-500 via-purple-700 to-purple-800  text-white`}
+        className={`${inter.className} flex flex-col w-full min-h-screen bg-gradient-to-b from-purple-500 via-purple-600 to-purple-700  text-white`}
       >
         <AuthProvider>
           <Header />
