@@ -78,7 +78,7 @@ export default function Profile() {
   }
 
   return (
-    <div className=" h-fit bg-gradient-to-b from-purple-700 to-purple-900 py-12 p-4 sm:p-6 lg:p-10 rounded-md">
+    <section className=" h-fit bg-gradient-to-b from-purple-700 to-purple-900 py-12 p-4 sm:p-6 lg:p-10 rounded-md">
       <div className="max-w-3xl mx-auto">
         <div className="bg-white shadow overflow-hidden sm:rounded-lg">
           <div className="px-4 py-5 sm:px-6">
@@ -172,6 +172,6 @@ export default function Profile() {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }
