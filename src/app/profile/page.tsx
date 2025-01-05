@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { useAuth } from "../../context/AuthContext";
-import { getAccount } from "../../utils/apiService";
 import {
   RefreshCw,
   LogOut,
@@ -11,6 +9,9 @@ import {
   Settings,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+
+import { useAuth } from "../../context/AuthContext";
+import { getAccount } from "../../utils/apiService";
 
 export default function Profile() {
   const [accountBalance, setAccountBalance] = useState<number | null>(null);
