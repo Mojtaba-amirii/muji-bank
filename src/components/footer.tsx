@@ -1,4 +1,7 @@
+import { Link2 } from "lucide-react";
 import Link from "next/link";
+
+import { contactInfo, quickLinks } from "@/utils/constants";
 
 export default function Footer() {
   return (
@@ -15,39 +18,32 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li>
-                <Link href="#" className="text-sm  hover:text-gray-900">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-sm  hover:text-gray-900">
-                  Our Services
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-sm hover:text-gray-900">
-                  Contact Us
-                </Link>
-              </li>
+              {quickLinks.map(({ href, label }) => (
+                <li key={label}>
+                  <Link
+                    href={href}
+                    className="text-sm hover:text-gray-300 flex items-center"
+                  >
+                    <Link2 className="w-4 h-4 mr-2" />
+                    {label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
             <h3 className="font-semibold text-lg mb-4">Contact Information</h3>
-            <address className="text-sm not-italic">
-              123 Banking Street
-              <br />
-              Financial District
-              <br />
-              City, State 12345
-              <br />
-              Phone: (123) 456-7890
-              <br />
-              Email: info@mujibank.com
+            <address className="text-sm not-italic space-y-2">
+              {contactInfo.map(({ icon: Icon, text }, index) => (
+                <p key={index} className="flex items-start">
+                  <Icon className="w-5 h-5 mr-2 mt-0.5 flex-shrink-0" />
+                  <span>{text}</span>
+                </p>
+              ))}
             </address>
           </div>
         </div>
-        <div className="mt-8 pt-8 border-t text-center text-sm">
+        <div className="mt-8 pt-8 border-t border-purple-800 text-center text-sm">
           © {new Date().getFullYear()} Muji Bank. All rights reserved.
         </div>
       </div>

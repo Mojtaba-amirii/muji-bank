@@ -1,10 +1,17 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useCallback, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useState,
+  useTransition,
+} from "react";
+import { AlertCircle, Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 import { useAuth } from "../context/AuthContext";
 import { User } from "../types/types";
-import { Eye, EyeOff } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 function Login() {
   const [loginCredentials, setLoginCredentials] = useState<
@@ -13,7 +20,7 @@ function Login() {
     username: "",
     password: "",
   });
-  const [loginLoading, setLoginLoading] = useState<boolean>(false);
+  const [isPending, startTransition] = useTransition();
   const [loginError, setLoginError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const { login } = useAuth();
@@ -31,32 +38,26 @@ function Login() {
     [loginError]
   );
 
-  const handleLogin = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      setLoginLoading(true);
-      setLoginError(null);
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoginError(null);
+    startTransition(async () => {
       try {
         await login(loginCredentials);
         router.push("/profile");
       } catch (error) {
         console.error("Error during login", error);
         setLoginError("Login failed. Please try again.");
-      } finally {
-        setLoginLoading(false);
       }
-    },
-    [loginCredentials, login, router]
-  );
+    });
+  };
 
   return (
-    <section className=" h-fit bg-gradient-to-b from-purple-700 to-purple-900 flex items-center justify-center p-4 sm:p-6 lg:p-10 rounded-md">
+    <section className=" h-fit bg-gradient-to-b from-purple-700 to-purple-900 flex items-center justify-center p-4 sm:p-6 lg:p-24 rounded-md">
       <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="text-center text-3xl font-extrabold text-white">
-            Log in to your account
-          </h2>
-        </div>
+        <h2 className="text-center text-3xl font-extrabold text-white">
+          Log in to your account
+        </h2>
 
         <form onSubmit={handleLogin} className="mt-8 space-y-6">
           <div className="rounded-md shadow-sm -space-y-px">
@@ -104,39 +105,22 @@ function Login() {
               </button>
             </div>
           </div>
-
-          <div>
-            <button
-              type="submit"
-              disabled={loginLoading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-            >
-              {loginLoading ? "Logging In..." : "Log In"}
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={isPending}
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+          >
+            {isPending ? "Logging In..." : "Log In"}
+          </button>
         </form>
 
         {loginError && (
-          <div className="rounded-md bg-red-50 p-4 mt-4">
+          <div className="rounded-md bg-red-50 p-4 mt-4" role="alert">
             <div className="flex">
-              <div className="flex-shrink-0">
-                <svg
-                  className="h-5 w-5 text-red-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-red-800">{loginError}</p>
-              </div>
+              <AlertCircle className="h-5 w-5 text-red-400" />
+              <p className="text-sm font-medium text-red-800 ml-3">
+                {loginError}
+              </p>
             </div>
           </div>
         )}
