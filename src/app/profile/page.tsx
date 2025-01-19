@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useTransition } from "react";
 import {
   RefreshCw,
   LogOut,
   CreditCard,
   User as UserIcon,
   Settings,
+  AlertCircle,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -15,41 +16,40 @@ import { getAccount } from "../../utils/apiService";
 
 export default function Profile() {
   const [accountBalance, setAccountBalance] = useState<number | null>(null);
-  const [checkingLoading, setCheckingLoading] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const { isLoggedIn, token, logout, user, refreshUserProfile } = useAuth();
   const router = useRouter();
 
-  const fetchAccountBalance = useCallback(async () => {
+  const fetchAccountBalance = useCallback(() => {
     if (!token) {
       setError("You must be logged in to check account information.");
       return;
     }
-    setCheckingLoading(true);
-    setError(null);
-    try {
-      const accountData = await getAccount(token);
-      setAccountBalance(accountData.amount);
-    } catch (error) {
-      console.error("Error fetching account balance", error);
-      setError("Failed to retrieve account information.");
-    } finally {
-      setCheckingLoading(false);
-    }
+    startTransition(async () => {
+      setError(null);
+      try {
+        const accountData = await getAccount(token);
+        setAccountBalance(accountData.amount);
+      } catch (error) {
+        console.error("Error fetching account balance", error);
+        setError("Failed to retrieve account information.");
+      }
+    });
   }, [token]);
 
   useEffect(() => {
     async function loadProfile() {
       if (isLoggedIn && token) {
-        if (!user) {
-          await refreshUserProfile();
-        }
-        await fetchAccountBalance();
+        startTransition(async () => {
+          if (!user) {
+            await refreshUserProfile();
+          }
+          fetchAccountBalance();
+        });
       } else {
         router.push("/login");
       }
-      setIsLoading(false);
     }
     loadProfile();
   }, [
@@ -57,22 +57,14 @@ export default function Profile() {
     token,
     user,
     refreshUserProfile,
-    fetchAccountBalance,
     router,
+    fetchAccountBalance,
   ]);
 
   const handleLogout = useCallback(() => {
     logout();
     router.push("/");
   }, [logout, router]);
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500"></div>
-      </div>
-    );
-  }
 
   if (!isLoggedIn || !user) {
     return null;
@@ -111,16 +103,17 @@ export default function Profile() {
                   <button
                     type="button"
                     onClick={fetchAccountBalance}
-                    disabled={checkingLoading}
-                    className="ml-3 inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-purple-700 bg-purple-100 hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                    disabled={isPending}
+                    className="ml-3 inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-purple-700 bg-purple-100 hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                    aria-label="Refresh account balance"
                   >
-                    {checkingLoading ? (
+                    {isPending ? (
                       <RefreshCw className="animate-spin h-4 w-4" />
                     ) : (
                       <RefreshCw className="h-4 w-4" />
                     )}
                     <span className="ml-1">
-                      {checkingLoading ? "Refreshing..." : "Refresh"}
+                      {isPending ? "Refreshing..." : "Refresh"}
                     </span>
                   </button>
                 </dd>
@@ -132,8 +125,9 @@ export default function Profile() {
               type="button"
               onClick={() => {
                 /* Implement settings functionality */
+                console.log("Settings clicked");
               }}
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 mr-3"
+              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 mr-3 transition-colors duration-200"
             >
               <Settings className="mr-2 h-5 w-5" />
               Settings
@@ -141,7 +135,7 @@ export default function Profile() {
             <button
               type="button"
               onClick={handleLogout}
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
             >
               <LogOut className="mr-2 h-5 w-5" />
               Logout
@@ -149,23 +143,9 @@ export default function Profile() {
           </div>
         </div>
         {error && (
-          <div className="mt-4 rounded-md bg-red-50 p-4">
+          <div className="mt-4 rounded-md bg-red-50 p-4" role="alert">
             <div className="flex">
-              <div className="flex-shrink-0">
-                <svg
-                  className="h-5 w-5 text-red-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
+              <AlertCircle className="h-5 w-5 text-red-400" />
               <div className="ml-3">
                 <p className="text-sm font-medium text-red-800">{error}</p>
               </div>

@@ -1,9 +1,10 @@
 "use client";
 
-import Link from "next/link";
-import { useAuth } from "../context/AuthContext";
-import { useState } from "react";
 import { LogOut, Menu, Home, UserPlus, User, LogIn } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+
+import { useAuth } from "../context/AuthContext";
 
 export default function Header() {
   const { user, logout } = useAuth();
