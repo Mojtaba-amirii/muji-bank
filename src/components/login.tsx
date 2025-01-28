@@ -53,14 +53,14 @@ function Login() {
   };
 
   return (
-    <section className=" h-fit bg-gradient-to-b from-purple-700 to-purple-900 flex items-center justify-center p-4 sm:p-6 lg:p-24 rounded-md">
+    <section className=" h-fit bg-linear-to-b from-purple-700 to-purple-900 flex items-center justify-center p-4 sm:p-6 lg:p-24 rounded-md">
       <div className="max-w-md w-full space-y-8">
         <h2 className="text-center text-3xl font-extrabold text-white">
           Log in to your account
         </h2>
 
         <form onSubmit={handleLogin} className="mt-8 space-y-6">
-          <div className="rounded-md shadow-sm -space-y-px">
+          <div className="rounded-md shadow-xs -space-y-px">
             <div>
               <label htmlFor="username" className="sr-only">
                 Username
@@ -71,7 +71,7 @@ function Login() {
                 type="text"
                 autoComplete="username"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-purple-300 placeholder-purple-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-purple-300 placeholder-purple-500 text-gray-900 rounded-t-md focus:outline-hidden focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
                 placeholder="Username"
                 value={loginCredentials.username}
                 onChange={handleInputChange}
@@ -87,7 +87,7 @@ function Login() {
                 type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-purple-300 placeholder-purple-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-purple-300 placeholder-purple-500 text-gray-900 rounded-b-md focus:outline-hidden focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
                 placeholder="Password"
                 value={loginCredentials.password}
                 onChange={handleInputChange}
@@ -108,7 +108,7 @@ function Login() {
           <button
             type="submit"
             disabled={isPending}
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
           >
             {isPending ? "Logging In..." : "Log In"}
           </button>

@@ -71,9 +71,9 @@ export default function Profile() {
   }
 
   return (
-    <section className=" h-fit bg-gradient-to-b from-purple-700 to-purple-900 py-12 p-4 sm:p-6 lg:p-10 rounded-md">
+    <section className=" h-fit bg-linear-to-b from-purple-700 to-purple-900 py-12 p-4 sm:p-6 lg:p-10 rounded-md">
       <div className="max-w-3xl mx-auto">
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div className="bg-white shadow-sm overflow-hidden sm:rounded-lg">
           <div className="px-4 py-5 sm:px-6">
             <h1 className="text-3xl font-bold leading-6 text-gray-900">
               Profile
@@ -104,7 +104,7 @@ export default function Profile() {
                     type="button"
                     onClick={fetchAccountBalance}
                     disabled={isPending}
-                    className="ml-3 inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-purple-700 bg-purple-100 hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                    className="ml-3 inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-purple-700 bg-purple-100 hover:bg-purple-200 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                     aria-label="Refresh account balance"
                   >
                     {isPending ? (
@@ -127,7 +127,7 @@ export default function Profile() {
                 /* Implement settings functionality */
                 console.log("Settings clicked");
               }}
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 mr-3 transition-colors duration-200"
+              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-xs text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 mr-3 transition-colors duration-200"
             >
               <Settings className="mr-2 h-5 w-5" />
               Settings
@@ -135,7 +135,7 @@ export default function Profile() {
             <button
               type="button"
               onClick={handleLogout}
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
+              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-xs text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
             >
               <LogOut className="mr-2 h-5 w-5" />
               Logout

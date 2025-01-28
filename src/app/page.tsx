@@ -30,7 +30,7 @@ export default function Home() {
       </section>
 
       <section className="grid md:grid-cols-3 gap-8 mb-16">
-        <div className="bg-white bg-opacity-10 p-6 rounded-lg">
+        <div className="bg-current/10 p-6 rounded-lg">
           <ShieldCheck className="w-12 h-12 mb-4 text-yellow-400" />
           <h2 className="text-2xl font-semibold mb-2">Secure Banking</h2>
           <p>
@@ -38,7 +38,7 @@ export default function Home() {
             state-of-the-art encryption and protection measures.
           </p>
         </div>
-        <div className="bg-white bg-opacity-10 p-6 rounded-lg">
+        <div className="bg-current/10 p-6 rounded-lg">
           <CreditCard className="w-12 h-12 mb-4 text-green-400" />
           <h2 className="text-2xl font-semibold mb-2">Easy Transfers</h2>
           <p>
@@ -46,7 +46,7 @@ export default function Home() {
             secure, and hassle-free transfers anytime, anywhere.
           </p>
         </div>
-        <div className="bg-white bg-opacity-10 p-6 rounded-lg">
+        <div className="bg-current/10 p-6 rounded-lg">
           <PiggyBank className="w-12 h-12 mb-4 text-pink-400" />
           <h2 className="text-2xl font-semibold mb-2">Smart Savings</h2>
           <p>

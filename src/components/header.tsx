@@ -27,7 +27,10 @@ export default function Header() {
     <header className="shadow-md">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
-          <Link href="/" className="text-2xl font-bold text-purple-950 p-1">
+          <Link
+            href="/"
+            className="text-2xl font-bold text-purple-950 p-1 hover:text-white"
+          >
             Muji Bank
           </Link>
           <nav className="hidden md:flex space-x-6">
