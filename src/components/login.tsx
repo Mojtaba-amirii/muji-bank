@@ -7,11 +7,11 @@ import {
   useState,
   useTransition,
 } from "react";
-import { AlertCircle, Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { AlertCircle, Eye, EyeOff } from "lucide-react";
 
-import { useAuth } from "../context/AuthContext";
 import { User } from "../types/types";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const [loginCredentials, setLoginCredentials] = useState<

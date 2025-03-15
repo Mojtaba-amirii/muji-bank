@@ -1,11 +1,11 @@
-import { Link2 } from "lucide-react";
 import Link from "next/link";
+import { Link2 } from "lucide-react";
 
 import { contactInfo, quickLinks } from "@/utils/constants";
 
 export default function Footer() {
   return (
-    <footer className="border-t text-white">
+    <footer className="border-t bg-conic-180 from-purple-500 via-purple-600 to-purple-700 text-white">
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
@@ -43,7 +43,7 @@ export default function Footer() {
             </address>
           </div>
         </div>
-        <div className="mt-8 pt-8 border-t border-purple-800 text-center text-sm">
+        <div className="mt-8 pt-8 border-t border-purple-800 text-sm">
           © {new Date().getFullYear()} Muji Bank. All rights reserved.
         </div>
       </div>

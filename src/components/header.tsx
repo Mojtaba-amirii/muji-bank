@@ -1,8 +1,8 @@
 "use client";
 
-import { LogOut, Menu, Home, UserPlus, User, LogIn } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { LogOut, Menu, Home, UserPlus, User, LogIn } from "lucide-react";
 
 import { useAuth } from "../context/AuthContext";
 
@@ -24,7 +24,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="shadow-md">
+    <header className="shadow-md bg-conic-180 from-purple-500 via-purple-600 to-purple-700 sticky top-0 z-10 ">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           <Link

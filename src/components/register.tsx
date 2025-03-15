@@ -1,10 +1,10 @@
 "use client";
 
-import { FormEvent, useState, useTransition, ChangeEvent } from "react";
 import { AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react";
+import { FormEvent, useState, useTransition, ChangeEvent } from "react";
 
-import { registerUser } from "../utils/apiService";
 import { User } from "../types/types";
+import { registerUser } from "../utils/apiService";
 
 export default function Register() {
   const [formData, setFormData] = useState<Omit<User, "id">>({
