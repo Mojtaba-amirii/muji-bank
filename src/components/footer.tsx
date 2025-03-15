@@ -5,7 +5,7 @@ import { contactInfo, quickLinks } from "@/utils/constants";
 
 export default function Footer() {
   return (
-    <footer className="border-t bg-conic-180 from-purple-500 via-purple-600 to-purple-700 text-white">
+    <footer className="border-t text-white">
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>

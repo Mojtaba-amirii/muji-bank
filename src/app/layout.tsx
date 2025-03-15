@@ -21,11 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} flex flex-col w-full min-h-screen text-white`}
+        className={`${inter.className} flex flex-col w-full min-h-screen bg-linear-to-b from-purple-500 via-purple-600 to-purple-700 text-white`}
       >
         <AuthProvider>
           <Header />
-          <main className=" flex flex-col grow items-center justify-center bg-linear-to-b from-purple-500 via-purple-600 to-purple-700 px-4 py-8">
+          <main className=" flex flex-col grow items-center justify-center px-4 py-8">
             {children}
           </main>
           <Footer />
