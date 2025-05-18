@@ -9,8 +9,8 @@ import {
   useCallback,
 } from "react";
 
-import { loginUser, getUserProfile } from "../utils/apiService";
 import { User } from "../types/types";
+import { loginUser, getUserProfile } from "../utils/apiService";
 
 interface AuthContextType {
   isLoggedIn: boolean;

@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import { sql } from "@vercel/postgres";
 import jwt from "jsonwebtoken";
+import { sql } from "@vercel/postgres";
+import { NextResponse } from "next/server";
 
 const secret = process.env.JWT_SECRET || "default_secret";
 

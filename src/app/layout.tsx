@@ -1,10 +1,11 @@
+import { ReactNode } from "react";
 import { Inter } from "next/font/google";
 
+import "./globals.css";
 import type { Metadata } from "next";
-import { AuthProvider } from "../context/AuthContext";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import "./globals.css";
+import { AuthProvider } from "../context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en">
