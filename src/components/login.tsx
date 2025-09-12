@@ -53,77 +53,124 @@ function Login() {
   };
 
   return (
-    <section className=" h-fit bg-linear-to-b from-purple-700 to-purple-900 flex items-center justify-center p-4 sm:p-6 lg:p-24 rounded-md">
-      <div className="max-w-md w-full space-y-8">
-        <h2 className="text-center text-3xl font-extrabold text-white">
-          Log in to your account
-        </h2>
+    <section className="w-fit mx-auto px-4">
+      <div className="  glass-effect rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/20">
+        {/* Header */}
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-accent-500 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
+            <span className="text-brand-900 font-black text-lg sm:text-2xl">
+              MB
+            </span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            Welcome Back
+          </h2>
+          <p className="text-white/80 text-sm">
+            Sign in to access your account
+          </p>
+        </div>
 
-        <form onSubmit={handleLogin} className="mt-8 space-y-6">
-          <div className="rounded-md shadow-xs -space-y-px">
-            <div>
-              <label htmlFor="username" className="sr-only">
-                Username
-              </label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                autoComplete="username"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-purple-300 placeholder-purple-500 text-gray-900 rounded-t-md focus:outline-hidden focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
-                placeholder="Username"
-                value={loginCredentials.username}
-                onChange={handleInputChange}
-              />
-            </div>
+        <form onSubmit={handleLogin} className="space-y-5 sm:space-y-6">
+          {/* Username Input */}
+          <div className="space-y-2">
+            <label
+              htmlFor="username"
+              className="text-sm font-medium text-white/90 block"
+            >
+              Username
+            </label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              autoComplete="username"
+              required
+              className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all duration-200 text-sm sm:text-base"
+              placeholder="Enter your username"
+              value={loginCredentials.username}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          {/* Password Input */}
+          <div className="space-y-2">
+            <label
+              htmlFor="password"
+              className="text-sm font-medium text-white/90 block"
+            >
+              Password
+            </label>
             <div className="relative">
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
               <input
                 id="password"
                 name="password"
                 type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-purple-300 placeholder-purple-500 text-gray-900 rounded-b-md focus:outline-hidden focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-10 sm:pr-12 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all duration-200 text-sm sm:text-base"
+                placeholder="Enter your password"
                 value={loginCredentials.password}
                 onChange={handleInputChange}
               />
               <button
                 type="button"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                className="absolute inset-y-0 right-0 pr-3 sm:pr-4 flex items-center text-white/60 hover:text-white transition-colors"
                 onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? (
-                  <EyeOff className="h-5 w-5 text-purple-500" />
+                  <EyeOff className="h-4 w-4 sm:h-5 sm:w-5" />
                 ) : (
-                  <Eye className="h-5 w-5 text-purple-500" />
+                  <Eye className="h-4 w-4 sm:h-5 sm:w-5" />
                 )}
               </button>
             </div>
           </div>
+
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={isPending}
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+            className="w-full bg-accent-500 hover:bg-accent-400 disabled:opacity-50 disabled:cursor-not-allowed text-brand-900 font-semibold py-2.5 sm:py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2 focus:ring-offset-transparent text-sm sm:text-base"
           >
-            {isPending ? "Logging In..." : "Log In"}
+            {isPending ? (
+              <span className="flex items-center justify-center gap-2">
+                <div className="w-4 h-4 border-2 border-brand-900/30 border-t-brand-900 rounded-full animate-spin"></div>
+                <span className="text-sm sm:text-base">Signing In...</span>
+              </span>
+            ) : (
+              "Sign In"
+            )}
           </button>
         </form>
 
+        {/* Error Message */}
         {loginError && (
-          <div className="rounded-md bg-red-50 p-4 mt-4" role="alert">
-            <div className="flex">
-              <AlertCircle className="h-5 w-5 text-red-400" />
-              <p className="text-sm font-medium text-red-800 ml-3">
+          <div
+            className="mt-5 sm:mt-6 bg-error-500/10 border border-error-500/20 rounded-xl p-3 sm:p-4"
+            role="alert"
+          >
+            <div className="flex items-center gap-2 sm:gap-3">
+              <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-error-400 flex-shrink-0" />
+              <p className="text-xs sm:text-sm font-medium text-error-100">
                 {loginError}
               </p>
             </div>
           </div>
         )}
+
+        {/* Footer */}
+        <div className="mt-6 sm:mt-8 text-center">
+          <p className="text-white/60 text-xs sm:text-sm">
+            Don&apos;t have an account?{" "}
+            <a
+              href="/create-account"
+              className="text-accent-400 hover:text-accent-300 font-medium transition-colors"
+            >
+              Create one here
+            </a>
+          </p>
+        </div>
       </div>
     </section>
   );

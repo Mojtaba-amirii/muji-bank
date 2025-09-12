@@ -71,83 +71,157 @@ export default function Profile() {
   }
 
   return (
-    <section className=" h-fit bg-linear-to-b from-purple-700 to-purple-900 py-12 p-4 sm:p-6 lg:p-10 rounded-md">
-      <div className="max-w-3xl mx-auto">
-        <div className="bg-white shadow-sm overflow-hidden sm:rounded-lg">
-          <div className="px-4 py-5 sm:px-6">
-            <h1 className="text-3xl font-bold leading-6 text-gray-900">
-              Profile
+    <section className="w-full max-w-6xl mx-auto px-4">
+      <div className="space-y-6 sm:space-y-8 lg:space-y-10">
+        {/* Profile Header */}
+        <div className="text-center space-y-3 sm:space-y-4">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-accent-500 rounded-3xl flex items-center justify-center mx-auto">
+            <UserIcon className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-brand-900" />
+          </div>
+          <div>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
+              Welcome back, {user?.username}
             </h1>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500">
-              Personal and account details
+            <p className="text-white/80 text-sm sm:text-base lg:text-lg">
+              Manage your account and view your financial overview
             </p>
           </div>
-          <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
-            <dl className="sm:divide-y sm:divide-gray-200">
-              <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500 flex items-center">
-                  <UserIcon className="mr-2 h-5 w-5 text-purple-500" />
-                  Username
-                </dt>
-                <dd className="mt-1 text-base text-gray-900 sm:mt-0 sm:col-span-2">
-                  {user?.username || "N/A"}
-                </dd>
+        </div>
+
+        {/* Account Overview Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          {/* Balance Card */}
+          <div className="glass-effect border border-white/20 rounded-3xl p-6 sm:p-8">
+            <div className="flex items-center justify-between mb-4 sm:mb-6">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-success-500/20 rounded-2xl flex items-center justify-center">
+                  <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 text-success-400" />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-semibold text-white">
+                    Account Balance
+                  </h3>
+                  <p className="text-white/60 text-xs sm:text-sm">
+                    Available funds
+                  </p>
+                </div>
               </div>
-              <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 items-center justify-center sm:gap-4 sm:px-6">
-                <dt className="text-sm font-medium text-gray-500 flex items-center">
-                  <CreditCard className="mr-2 h-5 w-5 text-purple-500" />
-                  Account Balance
-                </dt>
-                <dd className="flex justify-between items-center mt-1 text-sm sm:mt-0 sm:col-span-2 text-green-500">
-                  {accountBalance === null ? "---" : `$${accountBalance}`}
-                  <button
-                    type="button"
-                    onClick={fetchAccountBalance}
-                    disabled={isPending}
-                    className="ml-3 inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-purple-700 bg-purple-100 hover:bg-purple-200 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-                    aria-label="Refresh account balance"
-                  >
-                    {isPending ? (
-                      <RefreshCw className="animate-spin h-4 w-4" />
-                    ) : (
-                      <RefreshCw className="h-4 w-4" />
-                    )}
-                    <span className="ml-1">
-                      {isPending ? "Refreshing..." : "Refresh"}
-                    </span>
-                  </button>
-                </dd>
+              <button
+                type="button"
+                onClick={fetchAccountBalance}
+                disabled={isPending}
+                className="p-2 rounded-xl hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                aria-label="Refresh account balance"
+              >
+                <RefreshCw
+                  className={`w-4 h-4 sm:w-5 sm:h-5 text-white/80 ${
+                    isPending ? "animate-spin" : ""
+                  }`}
+                />
+              </button>
+            </div>
+
+            <div className="space-y-2">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-success-400">
+                {accountBalance === null
+                  ? "---"
+                  : `$${accountBalance.toLocaleString()}`}
               </div>
-            </dl>
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-white/60">
+                <div className="w-2 h-2 bg-success-400 rounded-full"></div>
+                <span>
+                  Last updated: {isPending ? "Updating..." : "Just now"}
+                </span>
+              </div>
+            </div>
           </div>
-          <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-            <button
-              type="button"
-              onClick={() => {
-                /* Implement settings functionality */
-                console.log("Settings clicked");
-              }}
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-xs text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 mr-3 transition-colors duration-200"
-            >
-              <Settings className="mr-2 h-5 w-5" />
-              Settings
-            </button>
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-xs text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
-            >
-              <LogOut className="mr-2 h-5 w-5" />
-              Logout
-            </button>
+
+          {/* Account Details Card */}
+          <div className="glass-effect border border-white/20 rounded-3xl p-6 sm:p-8">
+            <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-brand-400/20 rounded-2xl flex items-center justify-center">
+                <UserIcon className="w-5 h-5 sm:w-6 sm:h-6 text-brand-300" />
+              </div>
+              <div>
+                <h3 className="text-base sm:text-lg font-semibold text-white">
+                  Account Details
+                </h3>
+                <p className="text-white/60 text-xs sm:text-sm">
+                  Your profile information
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-3 sm:space-y-4">
+              <div className="flex justify-between items-center py-2 sm:py-3 border-b border-white/10">
+                <span className="text-white/80 text-sm sm:text-base">
+                  Username
+                </span>
+                <span className="text-white font-medium text-sm sm:text-base">
+                  {user?.username || "N/A"}
+                </span>
+              </div>
+              <div className="flex justify-between items-center py-2 sm:py-3 border-b border-white/10">
+                <span className="text-white/80 text-sm sm:text-base">
+                  Account Type
+                </span>
+                <span className="text-accent-400 font-medium text-sm sm:text-base">
+                  Personal
+                </span>
+              </div>
+              <div className="flex justify-between items-center py-2 sm:py-3">
+                <span className="text-white/80 text-sm sm:text-base">
+                  Status
+                </span>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-success-400 rounded-full animate-pulse"></div>
+                  <span className="text-success-400 font-medium text-sm sm:text-base">
+                    Active
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+          <button
+            type="button"
+            onClick={() => {
+              console.log("Settings clicked");
+            }}
+            className="group flex items-center justify-center gap-2 sm:gap-3 glass-effect border border-white/20 hover:bg-white/10 text-white py-3 sm:py-4 px-6 sm:px-8 rounded-2xl transition-all duration-200 transform hover:scale-105 text-sm sm:text-base"
+          >
+            <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="font-medium">Account Settings</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="group flex items-center justify-center gap-2 sm:gap-3 bg-error-500/20 border border-error-500/30 hover:bg-error-500/30 text-error-100 py-3 sm:py-4 px-6 sm:px-8 rounded-2xl transition-all duration-200 transform hover:scale-105 text-sm sm:text-base"
+          >
+            <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="font-medium">Sign Out</span>
+          </button>
+        </div>
+
+        {/* Error Message */}
         {error && (
-          <div className="mt-4 rounded-md bg-red-50 p-4" role="alert">
-            <div className="flex">
-              <AlertCircle className="h-5 w-5 text-red-400" />
-              <div className="ml-3">
-                <p className="text-sm font-medium text-red-800">{error}</p>
+          <div
+            className="bg-error-500/10 border border-error-500/20 rounded-2xl p-4 sm:p-6"
+            role="alert"
+          >
+            <div className="flex items-center gap-3 sm:gap-4">
+              <AlertCircle className="h-5 w-5 sm:h-6 sm:w-6 text-error-400 flex-shrink-0" />
+              <div>
+                <h4 className="font-medium text-error-100 text-sm sm:text-base">
+                  Error
+                </h4>
+                <p className="text-xs sm:text-sm text-error-200 mt-1">
+                  {error}
+                </p>
               </div>
             </div>
           </div>

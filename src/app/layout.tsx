@@ -20,14 +20,18 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
-        className={`${inter.className} flex flex-col w-full min-h-screen bg-linear-to-b from-purple-500 via-purple-600 to-purple-700 text-white`}
+        className={`${inter.className} flex flex-col w-full min-h-screen bg-gradient-to-br from-brand-600 via-brand-700 to-brand-800 text-white antialiased`}
       >
         <AuthProvider>
           <Header />
-          <main className=" flex flex-col grow items-center justify-center px-4 py-8">
-            {children}
+          <main className="flex flex-col grow items-center justify-center px-3 sm:px-4 lg:px-6 py-6 sm:py-8 lg:py-12 relative min-h-[calc(100vh-theme(spacing.32))]">
+            {/* Subtle background pattern */}
+            <div className="absolute inset-0 opacity-20 bg-pattern-dots"></div>
+            <div className="relative z-10 w-full max-w-7xl mx-auto">
+              {children}
+            </div>
           </main>
           <Footer />
         </AuthProvider>
