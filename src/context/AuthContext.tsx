@@ -24,8 +24,18 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    if (typeof window !== "undefined") {
+      return !!localStorage.getItem("token");
+    }
+    return false;
+  });
+  const [token, setToken] = useState<string | null>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token");
+    }
+    return null;
+  });
   const [user, setUser] = useState<User | null>(null);
 
   const logout = useCallback(() => {
@@ -70,14 +80,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [token, fetchUserProfile]);
 
+  // Fetch user profile on mount if token exists
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
-      setToken(storedToken);
-      setIsLoggedIn(true);
-      fetchUserProfile(storedToken);
+    if (token) {
+      // Use a separate async function to avoid setState sync call warning
+      const loadUserProfile = async () => {
+        await fetchUserProfile(token);
+      };
+      loadUserProfile();
     }
-  }, [fetchUserProfile]);
+  }, [token, fetchUserProfile]);
 
   return (
     <AuthContext.Provider
