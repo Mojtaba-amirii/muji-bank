@@ -150,7 +150,7 @@ export default function Register() {
           <button
             type="submit"
             disabled={isPending}
-            className="w-full bg-gradient-to-r from-success-500 to-success-600 hover:from-success-400 hover:to-success-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 sm:py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-success-400 focus:ring-offset-2 focus:ring-offset-transparent shadow-lg text-sm sm:text-base"
+            className="w-full bg-linear-to-r from-success-500 to-success-600 hover:from-success-400 hover:to-success-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 sm:py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-success-400 focus:ring-offset-2 focus:ring-offset-transparent shadow-lg text-sm sm:text-base"
           >
             {isPending ? (
               <span className="flex items-center justify-center gap-2">
@@ -172,7 +172,7 @@ export default function Register() {
             role="alert"
           >
             <div className="flex items-center gap-2 sm:gap-3">
-              <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-success-400 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-success-400 shrink-0" />
               <div>
                 <p className="text-xs sm:text-sm font-medium text-success-100">
                   Account created successfully!
@@ -191,7 +191,7 @@ export default function Register() {
             role="alert"
           >
             <div className="flex items-center gap-2 sm:gap-3">
-              <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-error-400 flex-shrink-0" />
+              <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-error-400 shrink-0" />
               <p className="text-xs sm:text-sm font-medium text-error-100">
                 Registration failed. Please try again.
               </p>

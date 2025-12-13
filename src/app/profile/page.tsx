@@ -214,7 +214,7 @@ export default function Profile() {
             role="alert"
           >
             <div className="flex items-center gap-3 sm:gap-4">
-              <AlertCircle className="h-5 w-5 sm:h-6 sm:w-6 text-error-400 flex-shrink-0" />
+              <AlertCircle className="h-5 w-5 sm:h-6 sm:w-6 text-error-400 shrink-0" />
               <div>
                 <h4 className="font-medium text-error-100 text-sm sm:text-base">
                   Error

@@ -41,7 +41,7 @@ export default function Footer() {
                     href={href}
                     className="text-white/80 hover:text-white hover:translate-x-1 transition-all duration-200 flex items-center gap-2 text-sm group"
                   >
-                    <Link2 className="w-3 h-3 sm:w-4 sm:h-4 text-accent-400 group-hover:text-accent-300 flex-shrink-0" />
+                    <Link2 className="w-3 h-3 sm:w-4 sm:h-4 text-accent-400 group-hover:text-accent-300 shrink-0" />
                     <span>{label}</span>
                   </Link>
                 </li>

@@ -151,7 +151,7 @@ function Login() {
             role="alert"
           >
             <div className="flex items-center gap-2 sm:gap-3">
-              <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-error-400 flex-shrink-0" />
+              <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-error-400 shrink-0" />
               <p className="text-xs sm:text-sm font-medium text-error-100">
                 {loginError}
               </p>

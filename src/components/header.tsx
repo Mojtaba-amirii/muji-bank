@@ -31,7 +31,7 @@ export default function Header() {
             href="/"
             className="text-lg sm:text-xl lg:text-2xl font-bold text-white hover:text-accent-400 transition-colors duration-200 flex items-center gap-2"
           >
-            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-accent-500 rounded-lg flex items-center justify-center flex-shrink-0">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-accent-500 rounded-lg flex items-center justify-center shrink-0">
               <span className="text-brand-900 font-black text-xs sm:text-sm">
                 MB
               </span>
@@ -58,7 +58,7 @@ export default function Header() {
           <button
             type="button"
             title="Toggle menu"
-            className="md:hidden p-2 rounded-xl hover:bg-white/10 transition-colors duration-200 flex-shrink-0"
+            className="md:hidden p-2 rounded-xl hover:bg-white/10 transition-colors duration-200 shrink-0"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <Menu className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -80,7 +80,7 @@ export default function Header() {
                 }}
                 className="flex items-center gap-3 text-white/90 hover:text-white hover:bg-white/10 px-4 py-3 rounded-xl transition-all duration-200 font-medium text-base"
               >
-                <Icon className="h-5 w-5 flex-shrink-0" />
+                <Icon className="h-5 w-5 shrink-0" />
                 <span>{label}</span>
               </Link>
             ))}

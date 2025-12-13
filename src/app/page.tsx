@@ -9,7 +9,7 @@ export default function Home() {
         <div className="space-y-4 sm:space-y-6">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight">
             Welcome to{" "}
-            <span className="bg-gradient-to-r from-accent-400 to-accent-500 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-accent-400 to-accent-500 bg-clip-text text-transparent">
               Muji Bank
             </span>
           </h1>
@@ -131,7 +131,7 @@ export default function Home() {
         <div className="space-y-4 sm:space-y-6">
           <Link
             href="/create-account"
-            className="group bg-gradient-to-r from-accent-500 to-accent-400 hover:from-accent-400 hover:to-accent-300 text-brand-900 font-bold py-3 sm:py-4 px-8 sm:px-12 rounded-2xl inline-flex items-center justify-center transition-all duration-200 transform hover:scale-105 shadow-xl text-base sm:text-lg mt-10"
+            className="group bg-linear-to-r from-accent-500 to-accent-400 hover:from-accent-400 hover:to-accent-300 text-brand-900 font-bold py-3 sm:py-4 px-8 sm:px-12 rounded-2xl inline-flex items-center justify-center transition-all duration-200 transform hover:scale-105 shadow-xl text-base sm:text-lg mt-10"
           >
             Open Your Account Today
             <ArrowRight className="ml-2 sm:ml-3 group-hover:translate-x-1 transition-transform w-4 h-4 sm:w-5 sm:h-5" />
